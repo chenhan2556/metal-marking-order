@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>峽中80｜金屬打標商品訂購單・奶油色版</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root { --paper:#f6f3eb; --surface:#fffefa; --ink:#263e34; --green:#244d3d; --green-soft:#edf3eb; --muted:#7b8277; --line:#e4e5db; --gold:#ad8f58; --red:#dc4545; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--paper); color:var(--ink); font-family:ui-sans-serif,system-ui,sans-serif,"Apple Color Emoji","Segoe UI Emoji"; font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+    button,input { font:inherit; }
+    button,label,input { -webkit-tap-highlight-color:transparent; }
+    button { cursor:pointer; }
+    .hidden { display:none!important; }
+    .page-wrap { width:min(1100px,calc(100% - 64px)); margin:0 auto; }
+    .brand-header { display:flex; justify-content:space-between; align-items:center; padding:30px 0 22px; border-bottom:1px solid #dadfd2; }
+    .brand { display:flex; gap:13px; align-items:center; }
+    .brand-mark { width:41px; height:45px; color:var(--green); }
+    .brand-name { font-size:23px; font-weight:750; letter-spacing:2px; line-height:1.3; }
+    .brand-sub { margin-top:5px; font-size:9px; letter-spacing:2.3px; color:var(--muted); }
+    .header-note { display:flex; align-items:center; gap:9px; color:#667367; font-size:12px; letter-spacing:1px; }
+    .header-note svg { width:16px; height:16px; color:var(--gold); }
+    .hero { display:grid; grid-template-columns:1fr 290px; align-items:center; gap:35px; padding:35px 14px 37px 0; }
+    .eyebrow { margin:0 0 12px; color:#8a784f; letter-spacing:2.2px; font-size:10px; font-weight:600; }
+    .hero h1 { margin:0; font-size:38px; font-weight:700; letter-spacing:1px; line-height:1.5; }
+    .hero p.description { margin:12px 0 15px; font-size:14px; color:#747e72; line-height:1.9; }
+    .base-price { display:inline-flex; align-items:center; gap:10px; color:#54674f; font-size:12px; }
+    .base-price::before { content:''; width:22px; height:1px; background:var(--gold); }
+    .base-price strong { font-size:14px; font-weight:650; }
+    .tag-art { width:100%; height:190px; overflow:visible; }
+    .workspace { display:grid; grid-template-columns:minmax(0,1fr) 278px; gap:26px; align-items:start; position:relative; }
+    #order-form-container { border:1px solid var(--line); background:var(--surface); border-radius:20px; overflow:hidden; box-shadow:0 6px 24px #223c2a04; }
+    .form-heading { padding:23px 30px; display:flex; align-items:center; gap:12px; background:#fbfbf5; border-bottom:1px solid var(--line); }
+    .form-heading > svg { width:20px; height:20px; color:var(--green); }
+    .form-heading h2 { margin:0; font-size:16px; font-weight:650; letter-spacing:.5px; }
+    .form-heading small { margin-left:auto; color:#8a927f; font-size:10px; letter-spacing:1.5px; }
+    #real-order-form { padding:0 30px 28px; }
+    .form-section { padding:27px 0 28px; border-bottom:1px solid var(--line); }
+    .section-heading { display:flex; align-items:center; gap:11px; margin:0 0 20px; }
+    .step-number { color:var(--gold); font-family:Georgia,serif; font-size:17px; font-style:italic; }
+    .section-heading h3 { margin:0; color:var(--ink); font-size:17px; font-weight:650; letter-spacing:.5px; }
+    .section-heading .section-note { margin-left:auto; color:#92988b; font-size:11px; }
+    .contact-fields { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+    .field-label { display:block; min-width:0; }
+    .field-label > span,.small-heading { display:block; font-size:13px; font-weight:550; margin:0 0 9px; color:#586656; }
+    .field-label em { font-size:11px; color:#8b9386; font-style:normal; font-weight:400; }
+    input[type=text],input[type=tel] { width:100%; min-width:0; height:49px; padding:0 14px; border:1px solid #dce1d5; border-radius:9px; background:#fff; color:#304532; font-size:15px; outline:none; transition:border-color .16s,box-shadow .16s; }
+    input::placeholder { color:#a2a89a; opacity:1; font-size:13px; }
+    input[type=text]:focus,input[type=tel]:focus { border-color:#67876b; box-shadow:0 0 0 3px #456a4712; }
+    #customer-name:focus,#customer-phone:focus { border-color:var(--red); box-shadow:0 0 0 3px #dc45451a; }
+    #customer-phone[aria-invalid=true] { border-color:var(--red); }
+    .phone-error { position:relative; margin-top:8px; padding:8px 11px; border:1px solid #f4c8c3; border-radius:8px; background:#fff4f0; color:#bc3c36; font-size:12px; }
+    .phone-error::before { content:''; position:absolute; top:-5px; left:16px; width:8px; height:8px; transform:rotate(45deg); border-top:1px solid #f4c8c3; border-left:1px solid #f4c8c3; background:#fff4f0; }
+    #shape-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; margin-bottom:22px; }
+    #color-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
+    #pattern-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:11px; }
+    #font-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:11px; }
+    #real-order-form .option-label { position:relative; border:1px solid #dce2d5; border-radius:11px; box-shadow:none; transition:background .18s,border-color .18s,box-shadow .18s; background:#fff; }
+    #real-order-form .option-label:hover { border-color:#9faf95; background:#f8faf4; }
+    #real-order-form .option-label:has(input:checked) { border-color:#4e7351; background:var(--green-soft); box-shadow:0 0 0 1px #4e7351; }
+    #real-order-form .option-label:has(input:focus-visible) { outline:3px solid #ad8f5866; outline-offset:3px; }
+    #real-order-form .option-label:has(input:checked)::after { content:'✓'; position:absolute; right:7px; top:6px; width:16px; height:16px; border-radius:50%; display:grid; place-items:center; background:#3c6645; color:#fff; font-size:10px; font-weight:600; line-height:1; }
+    #shape-grid .option-label { min-height:64px; padding:14px 26px 14px 12px; color:#3c523c; font-size:16px; font-weight:600; }
+    #color-grid label { display:grid; grid-template-columns:14px 1fr; align-content:center; align-items:center; column-gap:8px; min-height:70px; padding:11px 17px; }
+    #color-grid label::before { content:''; grid-row:1; width:12px; height:12px; border-radius:50%; border:1px solid #0000000d; background:#9aa98e; }
+    #color-grid label:has(input[value="藍"])::before { background:#527188; }
+    #color-grid label:has(input[value="銀"])::before { background:linear-gradient(135deg,#bec5c5,#f1f3f1,#adb5b5); }
+    #color-grid label:has(input[value="黑"])::before { background:#3a403d; }
+    #color-grid label:has(input[value="金"])::before { background:linear-gradient(135deg,#9e814d,#e0c788,#b19458); }
+    #color-grid label:has(input[value="炫彩"])::before { background:linear-gradient(135deg,#a89ad2,#91bac8,#e6bda5); }
+    #color-grid label:has(input[value="玫瑰金"])::before { background:#d4a697; }
+    #color-grid label > span:first-of-type { grid-column:2; font-size:14px; font-weight:550; color:#3f5140; }
+    #color-grid label > span:last-of-type { grid-column:2; margin-top:3px; justify-self:start; padding:0; background:none; font-size:10px; font-weight:400; color:#7b8b72; white-space:nowrap; }
+    #color-grid .sold-out-label { opacity:.65; box-shadow:none; border:1px solid #e4e5dd; background:#f6f6f1; border-radius:11px; }
+    #color-grid .sold-out-label > span:last-of-type { color:#aa8274; }
+    #pattern-grid .option-label,#font-grid .option-label { min-height:107px; height:107px; padding:11px 9px; }
+    #pattern-grid img { max-height:60px; max-width:75px; object-fit:contain; margin-bottom:5px; mix-blend-mode:multiply; }
+    #font-grid img { max-height:43px; max-width:95px; width:100%; object-fit:contain; margin-bottom:9px; mix-blend-mode:multiply; }
+    #pattern-grid .option-label > span,#font-grid .option-label > span { font-size:10px; font-weight:500; color:#7a8674; background:none; padding:0; }
+    #pattern-grid .option-label > svg,#font-grid .option-label > svg { color:#8b9c81; width:24px; height:24px; margin-bottom:10px; }
+    #engrave-text { margin:0 0 18px; }
+    .small-heading .hint { font-weight:400; color:#929a8b; font-size:12px; margin-left:6px; }
+    .addon-label { display:flex; align-items:center; gap:13px; padding:17px 16px; margin-bottom:10px; border:1px solid var(--line); border-radius:11px; background:#fff; cursor:pointer; transition:background .18s,border-color .18s; }
+    .addon-label:hover,.addon-label:has(input:checked) { background:#f4f7ef; border-color:#b5c5aa; }
+    .addon-label input { flex:none; width:18px; height:18px; accent-color:#456b47; }
+    .addon-copy { flex:1; min-width:0; }
+    .addon-copy strong { display:block; font-size:14px; font-weight:600; }
+    .addon-copy small { display:block; margin-top:4px; color:#8a9282; font-size:11px; line-height:1.7; }
+    .addon-price { white-space:nowrap; font-size:14px; color:#7d744f; font-weight:550; }
+    #backtext-container { margin:14px 0 3px; padding:0 0 0 31px; }
+    .helper { margin:8px 0 0; font-size:11px; color:#8a9481; }
+    .checkout { padding-top:25px; }
+    .mobile-total { display:none; }
+    #submit-btn { display:flex; width:100%; align-items:center; justify-content:center; gap:10px; min-height:55px; padding:14px; border:1px solid #244b37; border-radius:10px; background:var(--green); color:#fffdf5; font-size:16px; font-weight:600; letter-spacing:.7px; box-shadow:0 4px 10px #244d3d10; transition:background .18s,transform .18s; }
+    #submit-btn:hover { background:#183c2c; }
+    #submit-btn:active { transform:translateY(1px); }
+    #submit-btn:focus-visible { outline:3px solid #ad8f5888; outline-offset:4px; }
+    #submit-btn:disabled { background:#acb4a5; border-color:#acb4a5; cursor:wait; }
+    #submit-btn svg { width:18px; height:18px; }
+    .checkout-note { margin:12px 0 0; color:#939b8b; text-align:center; font-size:10px; }
+    .order-aside { position:sticky; top:26px; }
+    .receipt { padding:25px 22px 22px; background:#f0eddf; border:1px solid #e3dfcd; border-radius:15px; position:relative; }
+    .receipt-eyebrow { color:#999076; font-size:9px; letter-spacing:2px; margin-bottom:9px; }
+    .receipt-title { margin:0 0 23px; font-size:19px; font-weight:650; letter-spacing:1px; }
+    .receipt-spec { display:flex; justify-content:space-between; gap:12px; font-size:12px; margin:13px 0; }
+    .receipt-spec dt { flex:none; color:#8b907e; }
+    .receipt-spec dd { margin:0; color:#526349; font-weight:500; text-align:right; overflow-wrap:anywhere; }
+    .receipt-rule { margin:20px 0; border:0; border-top:1px dashed #cfceb9; }
+    .price-line { display:flex; justify-content:space-between; margin:11px 0; color:#7d846e; font-size:11px; }
+    .price-line span:last-child { color:#5a694e; font-variant-numeric:tabular-nums; }
+    .receipt-total { display:flex; justify-content:space-between; align-items:baseline; padding-top:17px; margin-top:18px; border-top:1px solid #d8dac6; }
+    .receipt-total > span { font-size:12px; color:#69765b; }
+    .receipt-total strong { color:#32513a; font-size:27px; font-weight:600; letter-spacing:-1px; font-variant-numeric:tabular-nums; }
+    .receipt-total small { font-size:10px; font-weight:400; letter-spacing:.5px; margin-right:4px; }
+    .aside-note { display:flex; gap:9px; padding:19px 7px; color:#8a927c; font-size:11px; line-height:1.9; }
+    .aside-note svg { margin-top:3px; width:15px; height:15px; flex:none; color:#9f946e; }
+    .page-footer { display:flex; justify-content:space-between; padding:26px 0 20px; color:#a1a592; font-size:10px; letter-spacing:.6px; }
+    #init-loader { position:absolute; inset:0; z-index:5; min-height:500px; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:20px; background:#fffefaf2; }
+    #init-loader svg { width:32px; height:32px; color:var(--green); margin-bottom:16px; animation:spin 1s linear infinite; }
+    #init-loader h3 { font-size:15px; font-weight:500; }
+    #success-message { grid-column:1/-1; display:flex; flex-direction:column; align-items:center; gap:16px; padding:60px 25px; background:var(--surface); border:1px solid #dce5d3; border-radius:20px; text-align:center; }
+    #success-message > svg { width:46px; height:46px; color:#4d7451; }
+    #success-message h2 { font-size:25px; font-weight:600; }
+    #success-message p { color:#74806a; }
+    #order-number-display { font-weight:700; color:var(--green); font-size:27px; }
+    #success-message button { background:var(--green); color:#fff; border-radius:9px; padding:12px 22px; }
+    .workspace:has(#success-message:not(.hidden)) .order-aside { display:none; }
+    #order-confirm-dialog { width:min(470px,calc(100% - 32px)); max-height:calc(100vh - 32px); max-height:calc(100dvh - 32px); margin:auto; padding:0; overflow:auto; border:1px solid var(--line); border-radius:18px; background:var(--surface); color:var(--ink); box-shadow:0 20px 60px #193a3326; }
+    #order-confirm-dialog::backdrop { background:#1b302b70; }
+    .confirm-heading { padding:23px 24px 18px; border-bottom:1px solid var(--line); }
+    .confirm-heading h2 { margin:0; font-size:18px; font-weight:650; line-height:1.6; }
+    #order-confirm-message { max-height:52vh; margin:0; padding:20px 24px; overflow:auto; white-space:pre-wrap; overflow-wrap:anywhere; color:#586656; font-size:14px; line-height:1.9; }
+    .confirm-actions { display:flex; gap:10px; padding:17px 24px 23px; border-top:1px solid var(--line); }
+    .confirm-actions button { flex:1; min-width:0; min-height:46px; padding:10px 12px; border:1px solid #d5ddce; border-radius:9px; background:#fff; color:var(--green); font-size:14px; font-weight:550; }
+    .confirm-actions button:focus-visible { outline:3px solid #ad8f5888; outline-offset:3px; }
+    #order-confirm-accept { border-color:var(--green); background:var(--green); color:#fffdf5; }
+    #order-submit-error { margin-top:12px; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; } }
+    @media (max-width:1000px) {
+      .page-wrap { width:calc(100% - 48px); }
+      .workspace { grid-template-columns:minmax(0,1fr) 245px; gap:20px; }
+      #real-order-form { padding:0 23px 25px; }
+      .form-heading { padding:20px 23px; }
+      #color-grid label { padding:10px 12px; column-gap:6px; }
+      .section-heading .section-note { font-size:10px; }
+      .hero h1 { font-size:34px; }
+    }
+    @media (max-width:800px) {
+      .workspace { display:block; }
+      .order-aside { display:none; }
+      .mobile-total { display:flex; justify-content:space-between; align-items:baseline; margin:0 0 17px; font-size:13px; color:#7b866e; }
+      .mobile-total strong { color:#35553b; font-size:23px; font-weight:650; font-variant-numeric:tabular-nums; }
+      .mobile-total small { font-size:10px; font-weight:400; margin-right:5px; }
+      .hero { grid-template-columns:1fr 210px; gap:15px; }
+      .tag-art { height:160px; }
+    }
+    @media (max-width:540px) {
+      .page-wrap { width:calc(100% - 32px); }
+      .brand-header { padding:23px 2px 17px; }
+      .brand-mark { width:31px; height:36px; }
+      .brand { gap:9px; }
+      .brand-name { font-size:20px; letter-spacing:1px; }
+      .brand-sub { font-size:7px; letter-spacing:1.6px; margin-top:4px; }
+      .header-note { font-size:10px; letter-spacing:0; gap:5px; }
+      .header-note svg { width:13px; height:13px; }
+      .hero { grid-template-columns:minmax(0,1fr) 112px; gap:0; padding:27px 0 27px 5px; }
+      .eyebrow { font-size:8px; letter-spacing:1.6px; margin-bottom:9px; }
+      .hero h1 { font-size:29px; letter-spacing:.5px; line-height:1.45; }
+      .hero h1 span { display:block; }
+      .hero p.description { margin:10px 0 11px; font-size:11px; line-height:1.9; }
+      .hero .desktop-break { display:none; }
+      .tag-art { width:143px; max-width:none; height:158px; margin-left:-17px; }
+      .base-price { font-size:10px; gap:7px; }
+      .base-price::before { width:15px; }
+      .base-price strong { font-size:12px; }
+      #order-form-container { border-radius:15px; }
+      .form-heading { gap:9px; padding:18px 19px; }
+      .form-heading h2 { font-size:14px; }
+      .form-heading > svg { width:17px; height:17px; }
+      .form-heading small { font-size:8px; }
+      #real-order-form { padding:0 19px 23px; }
+      .form-section { padding:24px 0 25px; }
+      .section-heading { gap:9px; margin-bottom:17px; }
+      .section-heading h3 { font-size:16px; }
+      .step-number { font-size:16px; }
+      .section-heading .section-note { font-size:9px; }
+      .contact-fields { grid-template-columns:1fr; gap:16px; }
+      input[type=text],input[type=tel] { height:48px; font-size:16px; }
+      input::placeholder { font-size:12px; }
+      #shape-grid { gap:10px; margin-bottom:21px; }
+      #shape-grid .option-label { font-size:14px; min-height:60px; padding:14px 20px 14px 9px; }
+      #color-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+      #color-grid label { min-height:65px; padding:10px 17px; }
+      #pattern-grid { grid-template-columns:repeat(3,minmax(0,1fr)); gap:9px; }
+      #font-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+      #pattern-grid .option-label { height:101px; min-height:101px; }
+      #font-grid .option-label { height:92px; min-height:92px; }
+      #pattern-grid img { max-height:54px; max-width:67px; }
+      .addon-label { gap:10px; padding:14px 12px; }
+      .addon-copy strong { font-size:13px; }
+      .addon-copy small { font-size:12px; }
+      .addon-price { font-size:12px; }
+      #backtext-container { padding-left:0; }
+      #submit-btn { font-size:14px; min-height:53px; }
+      .page-footer { display:block; text-align:center; line-height:2; padding:21px 0 18px; }
+      .page-footer span { display:block; }
+    }
+  </style>
+  
+</head>
+<body>
+  <div class="page-wrap">
+    <header class="brand-header">
+      <div class="brand">
+        <svg class="brand-mark" viewBox="0 0 43 48" fill="none" aria-hidden="true"><path d="M8 2h22l10 12v29a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V8a6 6 0 0 1 5-6Z" stroke="currentColor" stroke-width="1.4"/><circle cx="11" cy="10" r="2" fill="#ad8f58"/><path d="M16 34c-8-11-1-19 12-20 0 14-3 21-12 20Zm0 0L28 14M20 27l-1-8m5 3 6-2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+        <div><div class="brand-name">峽中80</div><div class="brand-sub">METAL MAKING</div></div>
+      </div>
+      <div class="header-note"><i data-lucide="sparkle" aria-hidden="true"></i><span>一份心意，一件專屬</span></div>
+    </header>
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow">A LITTLE SOMETHING, JUST FOR YOU</p>
+        <h1 id="page-title"><span>把喜歡，</span><span>刻成日常。</span></h1>
+        <p class="description">選一款喜歡的造型，搭配圖樣與文字，<br class="desktop-break">製作屬於你的專屬金屬小物。</p>
+        <div class="base-price">專屬訂製，從 <strong>NT$100</strong> 開始</div>
+      </div>
+      <svg class="tag-art" viewBox="0 0 320 210" fill="none" role="img" aria-label="金屬吊牌風格示意">
+        <defs>
+          <linearGradient id="silver" x1="20" y1="0" x2="160" y2="190" gradientUnits="userSpaceOnUse"><stop stop-color="#f8f8ef"/><stop offset=".3" stop-color="#d8dfd7"/><stop offset=".55" stop-color="#eef0e7"/><stop offset="1" stop-color="#aab6aa"/></linearGradient>
+          <linearGradient id="gold" x1="0" y1="0" x2="100" y2="170" gradientUnits="userSpaceOnUse"><stop stop-color="#e2d5b6"/><stop offset=".45" stop-color="#f2e8cd"/><stop offset="1" stop-color="#c0b08a"/></linearGradient>
+          <filter id="tag-shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="3" dy="8" stdDeviation="6" flood-color="#66735e" flood-opacity=".13"/></filter>
+        </defs>
+        <ellipse cx="163" cy="172" rx="111" ry="13" fill="#dde0cf" opacity=".35"/>
+        <g transform="translate(177 23) rotate(17 55 80)" filter="url(#tag-shadow)">
+          <path d="M11 13h88a8 8 0 0 1 8 8v135a8 8 0 0 1-8 8H11a8 8 0 0 1-8-8V21a8 8 0 0 1 8-8Z" fill="url(#gold)" stroke="#bdad87"/>
+          <rect x="8" y="18" width="94" height="141" rx="5" stroke="#f8efdc"/>
+          <circle cx="55" cy="29" r="4.5" fill="#f6f3eb" stroke="#baa982"/>
+          <path d="M44 13C43-6 68-7 66 13" stroke="#9b9c83" stroke-width="3"/>
+          <path d="M44 13C43-6 68-7 66 13" stroke="#e1dfc9" stroke-width="1"/>
+          <path d="M55 102c-24-18-19-34-7-31 5 1 7 7 7 7s3-6 8-7c13-2 17 14-8 31Z" stroke="#8a815e" stroke-width="1.5"/>
+          <path d="M31 118h48M41 124h28" stroke="#a29672" stroke-width=".8"/>
+        </g>
+        <g transform="translate(52 10) rotate(-14 65 86)" filter="url(#tag-shadow)">
+          <path d="M12 8h103a10 10 0 0 1 10 10v140a10 10 0 0 1-10 10H12a10 10 0 0 1-10-10V18A10 10 0 0 1 12 8Z" fill="url(#silver)" stroke="#a5b1a2"/>
+          <rect x="7" y="13" width="113" height="150" rx="7" stroke="#f8faf1"/>
+          <circle cx="64" cy="26" r="4.5" fill="#f6f3eb" stroke="#9caa96"/>
+          <path d="M54 8c-1-20 23-20 21 0" stroke="#9da990" stroke-width="3"/>
+          <path d="M54 8c-1-20 23-20 21 0" stroke="#e9ece0" stroke-width="1"/>
+          <path d="M52 92c-15-20-4-37 25-42-2 31-8 44-25 42Zm0 0 25-42M62 75l-1-15m9 5 11-3" stroke="#667d5f" stroke-width="1.4" stroke-linecap="round"/>
+          <text x="64" y="120" text-anchor="middle" fill="#65765e" font-family="Georgia,serif" font-size="21" letter-spacing="3">80</text>
+          <path d="M37 132h54" stroke="#8f9e83" stroke-width=".7"/>
+        </g>
+      </svg>
+    </section>
+    <main class="workspace">
+      <div id="init-loader"><i data-lucide="loader" aria-hidden="true"></i><h3>正在同步最新庫存與圖樣…</h3></div>
+      <section id="success-message" class="hidden" aria-live="polite">
+        <i data-lucide="check-circle" aria-hidden="true"></i><h2>下單成功！</h2>
+        <p>您的取件號碼是：<span id="order-number-display"></span></p>
+        <button type="button" onclick="resetForm()">繼續下一筆訂單</button>
+      </section>
+      <div id="order-form-container" class="hidden">
+        <div class="form-heading"><i data-lucide="pen-tool" aria-hidden="true"></i><h2>開始你的專屬訂製</h2><small>ORDER FORM</small></div>
+        <form id="real-order-form" onsubmit="event.preventDefault(); submitOrder();">
+          <section class="form-section">
+            <div class="section-heading"><span class="step-number">01</span><h3>留下聯絡方式</h3><span class="section-note">方便我們與你聯繫</span></div>
+            <div class="contact-fields">
+              <label class="field-label"><span>姓名 <em>必填</em></span><input type="text" name="customerName" id="customer-name" autocomplete="name" placeholder="請輸入姓名" required></label>
+              <label class="field-label"><span>聯絡電話 <em>選填</em></span><input type="tel" name="customerPhone" id="customer-phone" placeholder="請輸入 10 位數字" inputmode="numeric" autocomplete="tel" pattern="[0-9]{10}" aria-describedby="phone-error" aria-invalid="false" oninput="validatePhone()" onblur="validatePhone()" oninvalid="validatePhone()"><p id="phone-error" class="phone-error hidden" role="alert" aria-live="polite">聯絡電話須為 10 位數字。</p></label>
+            </div>
+          </section>
+          <section class="form-section">
+            <div class="section-heading"><span class="step-number">02</span><h3>選一款喜歡的造型</h3><span class="section-note">基本款 NT$100</span></div>
+            <div id="shape-grid"></div>
+            <div class="small-heading">挑選顏色 <span class="hint">庫存即時顯示</span></div><div id="color-grid"></div>
+          </section>
+          <section class="form-section">
+            <div class="section-heading"><span class="step-number">03</span><h3>為正面選個圖樣</h3><span class="section-note">可選擇無圖樣</span></div>
+            <div id="pattern-grid"></div>
+          </section>
+          <section class="form-section">
+            <div class="section-heading"><span class="step-number">04</span><h3>刻上想說的話(字句3~5個字)</h3>
+            <span class="section-note">正面文字・選填</span></div>
+            <label for="engrave-text" class="small-heading">打標文字</label><input type="text" name="engraveText" id="engrave-text" placeholder="想留下的名字、文字，或一句心意">
+            <div class="small-heading">選擇字型 <span class="hint">有填寫文字時適用</span></div><div id="font-grid"></div>
+          </section>
+          <section class="form-section">
+            <div class="section-heading"><span class="step-number">05</span><h3>再多一點小心意</h3><span class="section-note">加值服務・選購</span></div>
+            <label class="addon-label"><input type="checkbox" name="charm" id="charm-checkbox" onchange="calculatePrice()"><div class="addon-copy"><strong>加購吊飾</strong><small>搭配質感配件，把專屬小物隨身帶著走</small></div><span class="addon-price">＋ $50</span></label>
+            <label class="addon-label"><input type="checkbox" name="hasBackText" id="backtext-checkbox" onchange="toggleBackText(); calculatePrice();"><div class="addon-copy"><strong>背面打印文字</strong><small>翻到另一面，還有想留下的話</small></div><span class="addon-price">＋ $50</span></label>
+            <div id="backtext-container" class="hidden"><label for="back-text-input" class="small-heading">背面文字</label><input type="text" name="backText" id="back-text-input" placeholder="請輸入背面欲打印的文字"><p class="helper">背面字型將與正面設定相同。</p></div>
+          </section>
+          <section class="form-section">
+            <div class="section-heading"><span class="step-number">06</span><h3>還有其他想告訴我們的嗎？</h3><span class="section-note">選填</span></div>
+            <label for="notes" class="small-heading">備註事項</label><input type="text" name="notes" id="notes" placeholder="特殊需求，歡迎在這裡告訴我們">
+          </section>
+          <div class="checkout"><div class="mobile-total"><span>本次訂製金額</span><strong><small>NT$</small><span id="mobile-total">100</span></strong></div><button type="submit" id="submit-btn"><i data-lucide="check-circle" aria-hidden="true"></i><span id="submit-btn-text">確認結帳送出 ($100)</span></button><p id="order-submit-error" class="phone-error hidden" role="alert" aria-live="polite" tabindex="-1"></p><p class="checkout-note">送出前將再次確認內容，讓每一份心意都剛剛好。</p></div>
+        </form>
+      </div>
+      <aside class="order-aside" aria-label="訂製內容摘要">
+        <div class="receipt"><div class="receipt-eyebrow">YOUR LITTLE KEEPSAKE</div><h2 class="receipt-title">你的訂製小物</h2>
+          <dl><div class="receipt-spec"><dt>商品造型</dt><dd id="summary-shape">—</dd></div><div class="receipt-spec"><dt>商品顏色</dt><dd id="summary-color">—</dd></div><div class="receipt-spec"><dt>正面圖樣</dt><dd id="summary-pattern">無</dd></div><div class="receipt-spec"><dt>正面文字</dt><dd id="summary-text">無</dd></div><div class="receipt-spec"><dt>字型</dt><dd id="summary-font">預設 / 無</dd></div></dl>
+          <hr class="receipt-rule"><div class="price-line"><span>基本款</span><span>NT$100</span></div><div class="price-line"><span>加購吊飾</span><span id="summary-charm">未加購</span></div><div class="price-line"><span>背面打印文字</span><span id="summary-back">未加購</span></div><div class="receipt-total"><span>訂製金額</span><strong><small>NT$</small><span id="summary-total">100</span></strong></div>
+        </div>
+        <div class="aside-note"><i data-lucide="leaf" aria-hidden="true"></i><span>選好喜歡的款式，<br>讓一份心意有了形狀。</span></div>
+      </aside>
+    </main>
+    <footer class="page-footer"><span>峽中80 · 金屬打標客製化商品</span><span>MADE PERSONAL. MADE FOR YOU.</span></footer>
+  </div>
+  <dialog id="order-confirm-dialog" aria-labelledby="order-confirm-title" aria-describedby="order-confirm-message">
+    <div class="confirm-heading"><h2 id="order-confirm-title"></h2></div>
+    <p id="order-confirm-message"></p>
+    <div class="confirm-actions">
+      <button type="button" onclick="document.getElementById('order-confirm-dialog').close('cancel')">返回修改</button>
+      <button type="button" id="order-confirm-accept" onclick="document.getElementById('order-confirm-dialog').close('confirm')" autofocus>確認內容，下一步</button>
+    </div>
+  </dialog>
+  <script>
+    // === 替換成你的 Google Apps Script API 網址 ===
+    const GAS_API_URL = "https://script.google.com/macros/s/AKfycbwEQg5Fh5nQvvJkWF2JuaRDMg2MmlR7OoTZzG28aWJV_ae2PRmVWTT6GhNNbEevhii2/exec"; 
+
+    let configData = { inventory: [], patterns: [], fonts: [] };
+
+    window.onload = async () => {
+      lucide.createIcons();
+      await fetchConfigData();
+    };
+
+    async function fetchConfigData() {
+      try {
+        const response = await fetch(GAS_API_URL + "?action=config&t=" + new Date().getTime());
+        configData = await response.json();
+        
+        buildFormUI(); 
+        document.getElementById('init-loader').classList.add('hidden');
+        document.getElementById('order-form-container').classList.remove('hidden');
+      } catch (error) {
+        alert("資料庫同步失敗，請重新整理網頁。");
+      }
+    }
+
+    function buildFormUI() {
+      const shapes = [...new Set(configData.inventory.map(item => item['造型']))];
+      document.getElementById('shape-grid').innerHTML = shapes.map((shape, index) => `
+        <label class="option-label cursor-pointer rounded-xl border-2 py-4 flex flex-col items-center justify-center bg-white border-slate-200 hover:border-slate-300 transition-all text-xl font-bold text-slate-700 shadow-sm">
+          <input type="radio" name="shape" value="${shape}" class="sr-only" onchange="renderColors()" ${index === 0 ? 'checked' : ''}>
+          ${shape}
+        </label>
+      `).join('');
+      
+      renderColors(); 
+      renderOptionsGrid('pattern-grid', configData.patterns, 'pattern', 'image-off', '無圖樣');
+      renderOptionsGrid('font-grid', configData.fonts, 'font', 'type', '預設 / 無');
+      lucide.createIcons();
+    }
+
+    function renderColors() {
+      const selectedShape = document.querySelector('input[name="shape"]:checked')?.value;
+      if (!selectedShape) return; 
+      
+      const availableColors = configData.inventory.filter(item => item['造型'] === selectedShape);
+      let hasCheckedAvailable = false; 
+
+      document.getElementById('color-grid').innerHTML = availableColors.map((item) => {
+        const stock = parseInt(item['庫存數量'], 10);
+        if (stock <= 0) {
+          return `
+            <label class="sold-out-label rounded-xl border-2 py-3 flex flex-col items-center justify-center shadow-inner">
+              <input type="radio" name="color" value="${item['顏色']}" class="sr-only" disabled>
+              <span class="font-bold text-slate-400 text-lg">${item['顏色']}色</span>
+              <span class="text-red-500 font-bold text-sm mt-1 bg-red-50 px-2 py-0.5 rounded">已售完</span>
+            </label>`;
+        } else {
+          let checkedAttr = '';
+          if (!hasCheckedAvailable) { checkedAttr = 'checked'; hasCheckedAvailable = true; }
+          return `
+            <label class="option-label cursor-pointer rounded-xl border-2 py-3 flex flex-col items-center justify-center bg-white border-slate-200 hover:border-slate-300 transition-all shadow-sm">
+              <input type="radio" name="color" value="${item['顏色']}" class="sr-only" ${checkedAttr}>
+              <span class="font-bold text-slate-700 text-lg">${item['顏色']}色</span>
+              <span class="text-emerald-600 font-medium text-sm mt-1 bg-emerald-50 px-2 py-0.5 rounded">剩餘 ${stock}</span>
+            </label>`;
+        }
+      }).join('');
+    }
+
+    function renderOptionsGrid(containerId, dataArray, inputName, defaultIcon, defaultText) {
+      const activeItems = dataArray.filter(item => item['狀態'] === '上架');
+      let html = `
+        <label class="option-label cursor-pointer rounded-xl border-2 flex flex-col items-center justify-center h-28 bg-white border-slate-200 hover:border-slate-300 shadow-sm">
+          <input type="radio" name="${inputName}" value="無" checked class="sr-only">
+          <i data-lucide="${defaultIcon}" class="text-slate-400 mb-2"></i>
+          <span class="text-slate-500 font-bold text-sm">${defaultText}</span>
+        </label>`;
+
+      html += activeItems.map(item => {
+        const name = item[Object.keys(item)[0]]; 
+        const url = item[Object.keys(item)[1]];
+        return `
+          <label class="option-label cursor-pointer rounded-xl border-2 p-2 flex flex-col items-center justify-center h-28 overflow-hidden bg-white border-slate-200 hover:border-slate-300 shadow-sm">
+            <input type="radio" name="${inputName}" value="${name}" class="sr-only">
+            ${url ? `<img src="${url}" alt="${name}" class="max-h-14 object-contain mb-1">` : ''}
+            <span class="text-xs text-slate-500 font-medium bg-slate-100 px-2 py-0.5 rounded-full break-all text-center leading-tight">${name}</span>
+          </label>`;
+      }).join('');
+      document.getElementById(containerId).innerHTML = html;
+    }
+
+    // ===== 動態計價與顯示邏輯 =====
+    function calculatePrice() {
+      let price = 100; // 基礎金額
+      if (document.getElementById('charm-checkbox').checked) price += 50;
+      if (document.getElementById('backtext-checkbox').checked) price += 50;
+      
+      document.getElementById('submit-btn-text').textContent = `確認結帳送出 ($${price})`;
+      return price;
+    }
+
+    function toggleBackText() {
+      const checkbox = document.getElementById('backtext-checkbox');
+      const container = document.getElementById('backtext-container');
+      const input = document.getElementById('back-text-input');
+      
+      if (checkbox.checked) {
+        container.classList.remove('hidden');
+        input.focus(); // 自動跳轉聚焦
+      } else {
+        container.classList.add('hidden');
+        input.value = ''; // 取消勾選時清空文字
+      }
+    }
+
+    function validatePhone() {
+      const input = document.getElementById('customer-phone');
+      const error = document.getElementById('phone-error');
+      const isValid = input.value === '' || /^[0-9]{10}$/.test(input.value);
+      input.setCustomValidity(isValid ? '' : error.textContent);
+      input.setAttribute('aria-invalid', String(!isValid));
+      error.classList.toggle('hidden', isValid);
+      return isValid;
+    }
+
+    function showOrderError(message) {
+      const error = document.getElementById('order-submit-error');
+      error.textContent = message;
+      error.classList.remove('hidden');
+      error.focus({ preventScroll: true });
+      error.scrollIntoView({ block: 'nearest' });
+    }
+
+    function requestOrderConfirmation(message, buttonText) {
+      const dialog = document.getElementById('order-confirm-dialog');
+      if (dialog.open) return Promise.resolve(false);
+      const [title, ...lines] = message.split('\n');
+      document.getElementById('order-confirm-title').textContent = title;
+      document.getElementById('order-confirm-message').textContent = lines.join('\n').trim();
+      document.getElementById('order-confirm-accept').textContent = buttonText;
+      dialog.returnValue = 'cancel';
+      return new Promise(resolve => {
+        const onClose = () => resolve(dialog.returnValue === 'confirm');
+        dialog.addEventListener('close', onClose, { once: true });
+        try {
+          dialog.showModal();
+        } catch (error) {
+          dialog.removeEventListener('close', onClose);
+          showOrderError('無法開啟確認視窗，請重新整理網頁後再試。');
+          resolve(false);
+        }
+      });
+    }
+
+    // ===== 送出邏輯 =====
+    async function submitOrder() {
+      if (document.getElementById('submit-btn').disabled) return;
+      document.getElementById('order-submit-error').classList.add('hidden');
+      if (!validatePhone()) {
+        document.getElementById('customer-phone').focus();
+        return;
+      }
+      const form = document.getElementById('real-order-form');
+      const formData = new FormData(form);
+      const name = formData.get('customerName').trim();
+      const text = formData.get('engraveText').trim();
+      const pattern = formData.get('pattern'); 
+      const font = formData.get('font');
+      const color = formData.get('color'); 
+      
+      // 讀取加值服務的值
+      const charm = document.getElementById('charm-checkbox').checked ? '是' : '否';
+      const hasBackText = document.getElementById('backtext-checkbox').checked;
+      const backText = hasBackText ? document.getElementById('back-text-input').value.trim() : '無';
+
+      // 邏輯驗證防呆
+      if (!name) return showOrderError("請填寫訂購人姓名");
+      if (!color) return showOrderError("請選擇一個尚未售完的顏色！");
+      if (hasBackText && !backText) return showOrderError("您已勾選「背面打印文字」，請輸入背面欲打印的文字，或取消勾選。");
+
+      const finalPrice = calculatePrice(); // 取得最終動態金額
+
+      const orderSummary = [
+        '第一次確認：請核對訂購內容',
+        `姓名：${name}`,
+        `聯絡電話：${formData.get('customerPhone') || '無'}`,
+        `商品：${formData.get('shape')}／${color}色`,
+        `正面圖樣：${pattern}`,
+        `正面文字：${text || '無'}`,
+        `字型：${font}`,
+        `背面文字：${backText}`,
+        `加購吊飾：${charm}`,
+        `總金額：$${finalPrice}`,
+        '',
+        '確認內容正確，繼續下一步？'
+      ].join('\n');
+      if (!await requestOrderConfirmation(orderSummary, '確認內容，下一步')) return;
+
+      const finalConfirmation = !text && pattern === '無'
+        ? '第二次確認：正面未選擇圖樣，也未填寫文字，正面將保留空白。\n\n確定依照以上內容送出訂單？'
+        : '第二次確認：確定依照以上內容送出訂單？';
+      if (!await requestOrderConfirmation(finalConfirmation, '確認送出訂單')) return;
+
+      const submitBtn = document.getElementById('submit-btn');
+      submitBtn.disabled = true;
+      
+      // 【修復點 1】先把按鈕原本的完整 HTML 存起來
+      const originalBtnHTML = submitBtn.innerHTML; 
+      
+      submitBtn.innerHTML = '<i data-lucide="loader" class="animate-spin mr-2"></i> <span>處理中...</span>';
+      lucide.createIcons();
+
+      const orderData = {
+        customerName: name, customerPhone: formData.get('customerPhone') || '無',
+        shape: formData.get('shape'), color: color,
+        pattern: pattern, text: text || '無', font: font, 
+        price: finalPrice, charm: charm, backText: backText, 
+        notes: formData.get('notes') || '無'
+      };
+
+      try {
+        const response = await fetch(GAS_API_URL, {
+          method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(orderData)
+        });
+        const result = await response.json();
+        
+        if (result.status === "success") {
+          document.getElementById('order-form-container').classList.add('hidden');
+          document.getElementById('success-message').classList.remove('hidden');
+          document.getElementById('success-message').classList.add('flex');
+          document.getElementById('order-number-display').textContent = "#" + result.orderNumber;
+        } else {
+          showOrderError("送出失敗：" + result.message);
+        }
+      } catch (error) {
+        showOrderError("網路連線錯誤，請確認網路狀態後再試一次。");
+      } finally {
+        submitBtn.disabled = false;
+        
+        // 【修復點 2】還原按鈕的 HTML 結構，這樣 resetForm 才能找到金額標籤
+        submitBtn.innerHTML = originalBtnHTML; 
+        
+        calculatePrice(); 
+        lucide.createIcons();
+      }
+    }
+
+    function resetForm() {
+      document.getElementById('real-order-form').reset();
+      validatePhone();
+      document.getElementById('order-submit-error').classList.add('hidden');
+      
+      // 手動觸發重置價格與隱藏背面輸入框
+      toggleBackText();
+      calculatePrice();
+      
+      document.getElementById('success-message').classList.add('hidden');
+      document.getElementById('success-message').classList.remove('flex');
+      
+      document.getElementById('init-loader').classList.remove('hidden');
+      document.getElementById('init-loader').classList.add('flex');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      
+      fetchConfigData(); 
+    }
+  </script>
+  <script>
+    function updateDesignSummary() {
+      const selected = name => document.querySelector(`input[name="${name}"]:checked`)?.value || '—';
+      const write = (id, value) => { document.getElementById(id).textContent = value; };
+      write('summary-shape', selected('shape'));
+      write('summary-color', selected('color') === '—' ? '—' : selected('color') + '色');
+      write('summary-pattern', selected('pattern'));
+      write('summary-font', selected('font') === '無' ? '預設 / 無' : selected('font'));
+      write('summary-text', document.getElementById('engrave-text').value.trim() || '無');
+      const charm = document.getElementById('charm-checkbox').checked;
+      const back = document.getElementById('backtext-checkbox').checked;
+      write('summary-charm', charm ? '＋ NT$50' : '未加購');
+      write('summary-back', back ? '＋ NT$50' : '未加購');
+      const price = 100 + (charm ? 50 : 0) + (back ? 50 : 0);
+      write('summary-total', String(price));
+      write('mobile-total', String(price));
+    }
+    const designForm = document.getElementById('real-order-form');
+    designForm.addEventListener('input', updateDesignSummary);
+    designForm.addEventListener('change', updateDesignSummary);
+    designForm.addEventListener('reset', () => queueMicrotask(updateDesignSummary));
+    ['shape-grid', 'color-grid', 'pattern-grid', 'font-grid'].forEach(id => {
+      new MutationObserver(updateDesignSummary).observe(document.getElementById(id), { childList:true });
+    });
+  </script>
+</body>
+</html>
